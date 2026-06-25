@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>leyu · 温和的站点介绍</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fcebdc 0%, #f7d9c4 50%, #f2c8ae 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.5rem 3rem;
+      line-height: 1.6;
+      color: #3d2c1f;
+    }
+    .page-wrapper {
+      max-width: 1200px;
+      width: 100%;
+    }
+    /* 顶部导航 */
+    .top-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 248, 240, 0.7);
+      backdrop-filter: blur(6px);
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      margin-bottom: 3rem;
+      box-shadow: 0 6px 20px rgba(180, 110, 60, 0.08);
+    }
+    .nav-brand {
+      font-size: 1.6rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: #7a4a2c;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #5a3a26;
+      font-weight: 480;
+      font-size: 1rem;
+      padding: 0.3rem 0.1rem;
+      border-bottom: 2px solid transparent;
+      transition: 0.2s;
+    }
+    .nav-links a:hover {
+      border-bottom-color: #b07d5a;
+      color: #3f2a1b;
+    }
+    /* 通用卡片 */
+    .card {
+      background: #fffcf9;
+      border-radius: 32px;
+      padding: 2rem 2.2rem;
+      box-shadow: 0 10px 28px -8px rgba(140, 80, 40, 0.12);
+      transition: transform 0.2s;
+    }
+    .card-soft {
+      background: rgba(255, 250, 244, 0.75);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 235, 215, 0.5);
+    }
+    /* hero */
+    .hero {
+      margin-bottom: 3rem;
+      text-align: center;
+      padding: 3.5rem 2rem 3rem;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 470;
+      letter-spacing: 2px;
+      color: #4d2f1d;
+      margin-bottom: 1rem;
+    }
+    .hero .sub {
+      font-size: 1.15rem;
+      color: #6a4e38;
+      max-width: 620px;
+      margin: 0 auto 1.6rem;
+      background: rgba(255, 240, 226, 0.5);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      display: inline-block;
+    }
+    .hero p {
+      max-width: 700px;
+      margin: 1.8rem auto 0.5rem;
+      font-size: 1.08rem;
+      color: #3f2f21;
+    }
+    /* 介绍区 */
+    .intro-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .intro-card {
+      flex: 1 1 280px;
+      padding: 2rem 1.8rem;
+    }
+    .intro-card h2 {
+      font-size: 1.5rem;
+      font-weight: 450;
+      border-left: 5px solid #dba885;
+      padding-left: 1rem;
+      margin-bottom: 1.2rem;
+      color: #45321f;
+    }
+    .intro-card p {
+      margin-bottom: 0.9rem;
+      color: #4d3827;
+    }
+    .intro-card .highlight {
+      background: #f2e3d5;
+      padding: 0.1rem 0.5rem;
+      border-radius: 24px;
+      font-weight: 470;
+    }
+    /* 三个场景模块 */
+    .scene-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+      margin: 2.5rem 0 3.5rem;
+    }
+    .scene-item {
+      background: white;
+      border-radius: 26px;
+      padding: 1.8rem 1.6rem 2rem;
+      box-shadow: 0 8px 18px rgba(130, 75, 40, 0.06);
+      transition: all 0.2s;
+      border: 1px solid #f2dfce;
+    }
+    .scene-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 26px -6px rgba(110, 60, 25, 0.12);
+    }
+    .scene-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.3rem;
+    }
+    .scene-item h3 {
+      font-size: 1.3rem;
+      font-weight: 460;
+      margin: 0.3rem 0 0.7rem;
+      color: #3d2c1c;
+    }
+    .scene-item p {
+      color: #4f3b2a;
+      font-size: 0.98rem;
+    }
+    /* 常见说明 (FAQ 摘要) */
+    .faq-summary {
+      margin: 3rem 0 2rem;
+      padding: 2rem 2.5rem;
+    }
+    .faq-summary h2 {
+      font-size: 1.5rem;
+      font-weight: 450;
+      margin-bottom: 1.6rem;
+      color: #3f2d1d;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .faq-item {
+      border-bottom: 1px solid #ecdccc;
+      padding: 0.9rem 0;
+    }
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+    .faq-q {
+      font-weight: 500;
+      color: #4d3621;
+      margin-bottom: 0.2rem;
+    }
+    .faq-a {
+      color: #5a4332;
+      font-size: 0.98rem;
+      padding-left: 0.5rem;
+    }
+    /* 信任与链接 */
+    .trust-note {
+      margin-top: 2.8rem;
+      text-align: center;
+      font-size: 1.08rem;
+      background: rgba(255, 245, 232, 0.6);
+      padding: 1.5rem 2rem;
+      border-radius: 60px;
+      backdrop-filter: blur(2px);
+    }
+    .trust-note a {
+      color: #7a4f32;
+      text-decoration: none;
+      font-weight: 470;
+      padding: 0.1rem 0.8rem;
+      background: #efe0d0;
+      border-radius: 40px;
+      transition: 0.15s;
+      margin: 0 0.2rem;
+    }
+    .trust-note a:hover {
+      background: #dbbc9f;
+      color: #2f1f13;
+    }
+    .inline-link {
+      color: #7a4f32;
+      text-decoration: none;
+      font-weight: 470;
+      border-bottom: 1px dashed #c9af98;
+    }
+    .inline-link:hover {
+      border-bottom-style: solid;
+      color: #4d2f1b;
+    }
+    /* 响应式 */
+    @media (max-width: 700px) {
+      body {
+        padding: 1.2rem 1rem 2.5rem;
+      }
+      .top-nav {
+        padding: 0.6rem 1.2rem;
+        border-radius: 40px;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      .nav-links {
+        gap: 1.2rem;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero .sub {
+        font-size: 1rem;
+      }
+      .card {
+        padding: 1.5rem 1.2rem;
+      }
+      .intro-section {
+        flex-direction: column;
+      }
+      .faq-summary {
+        padding: 1.5rem 1.2rem;
+      }
+      .trust-note {
+        padding: 1.2rem 1rem;
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .nav-links {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+      .scene-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <!-- 顶部导航 -->
+  <nav class="top-nav">
+    <span class="nav-brand">❀ leyu</span>
+    <div class="nav-links">
+      <a href="#intro">介绍</a>
+      <a href="#scenes">场景</a>
+      <a href="#faq">说明</a>
+      <a href="https://session-leyu.com.cn" style="border-bottom:2px solid #c9a382;">leyu</a>
+    </div>
+  </nav>
+
+  <!-- hero 区域 -->
+  <div class="hero card card-soft">
+    <h1>leyu · 温和的站点</h1>
+    <span class="sub">从可信与朴素的角度，认识这个空间</span>
+    <p>
+      <strong>leyu</strong> 是一个提供信息与服务的站点，我们更愿意把它视为一个安静的角落。<br>
+      没有喧哗的承诺，只有持续的维护与对细节的关照。
+    </p>
+  </div>
+
+  <!-- 核心介绍 (两个卡片)  -->
+  <div class="intro-section" id="intro">
+    <div class="card intro-card">
+      <h2>关于 leyu</h2>
+      <p>这是一个简单、克制的网络存在。我们围绕「<span class="highlight">leyu</span>」搭建起内容与服务，力求信息清晰、导航直观。无论你是初次到来，还是偶尔回访，都能在这里找到连贯的体验。</p>
+      <p>站点 <a href="https://session-leyu.com.cn" class="inline-link">leyu</a> 本身不收集不必要的个人信息，也不使用夸张的标语。我们所做的，是让每一次浏览都更轻快一些。</p>
+    </div>
+    <div class="card intro-card">
+      <h2>可信的由来</h2>
+      <p>一个站点是否可靠，往往体现在细节里。这里没有诱导式的弹窗，也没有夸大的效用描述。内容均经过基本核验，并以平实的语言呈现。如果你对某些信息有疑问，可以循着页面脉络进一步了解。</p>
+      <p>我们相信，温和的语调与透明的说明，比任何装饰都更能建立信任。<a href="https://session-leyu.com.cn" class="inline-link">leyu</a> 正是基于这样的理念逐步完善。</p>
+    </div>
+  </div>
+
+  <!-- 三个场景模块 -->
+  <h2 style="font-weight:450; font-size:1.5rem; color:#3f2b1b; margin-bottom:0.5rem;" id="scenes">几个常见的场景</h2>
+  <div class="scene-grid">
+    <div class="scene-item">
+      <div class="scene-icon">📖</div>
+      <h3>浏览与了解</h3>
+      <p>你或许只是想随便看看，或者寻找某个具体的说明。leyu 的页面结构偏向线性，分类清晰，不会让信息淹没在复杂的菜单里。</p>
+    </div>
+    <div class="scene-item">
+      <div class="scene-icon">🧭</div>
+      <h3>导航与指引</h3>
+      <p>当需要快速定位内容时，顶部的导航和页面内的锚点都能提供帮助。leyu 的链接都直接、有效，没有冗余的跳转步骤。</p>
+    </div>
+    <div class="scene-item">
+      <div class="scene-icon">🛡️</div>
+      <h3>信任与反复使用</h3>
+      <p>一个值得多次访问的站点，往往建立在稳定与诚实之上。leyu 不刻意追逐流量，而是希望每次访问都带来安心的体验。</p>
+    </div>
+  </div>
+
+  <!-- 常见说明 (FAQ 摘要) -->
+  <div class="card faq-summary" id="faq">
+    <h2>❔ 常见说明</h2>
+    <div class="faq-item">
+      <div class="faq-q">leyu 是一个什么样的站点？</div>
+      <div class="faq-a">它是一个以信息提供和基础服务为主的网站，风格偏朴素，重视内容的可读性与可信度。你可以通过 <a href="https://session-leyu.com.cn" class="inline-link">leyu</a> 直接访问主站。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">页面上的信息可靠吗？</div>
+      <div class="faq-a">我们尽力确保所展示的内容经过基本核实，不发布未经检验的断言。但任何站点都无法穷尽所有细节，建议你结合其他可靠来源交叉参考。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">为何这个介绍页看起来比较简洁？</div>
+      <div class="faq-a">简洁本身就是一种态度。我们希望用更少的视觉干扰传递更清晰的信息，让访客把注意力放在内容本身，而不是装饰上。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">我会在这里看到广告或推广吗？</div>
+      <div class="faq-a">目前 leyu 不包含第三方商业广告，也没有隐藏的推广链接。如果未来有任何变化，我们会以同样透明的方式告知。</div>
+    </div>
+  </div>
+
+  <!-- 信任与链接 (自然嵌入) -->
+  <div class="trust-note">
+    <span>如果你对 <a href="https://session-leyu.com.cn">leyu</a> 有任何想法或建议，欢迎通过站点内提供的方式反馈。<br>我们始终相信，一个温和、真诚的网站，值得被耐心对待。</span>
+  </div>
+
+  <!-- 底部轻提示 (非强制) -->
+  <div style="margin-top:2rem; text-align:center; font-size:0.9rem; color:#7a624b; opacity:0.75;">
+    <span>🌱 保持温和，保持清晰</span>
+  </div>
+</div>
+</body>
+</html>
