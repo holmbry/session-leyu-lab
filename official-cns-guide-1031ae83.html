@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ayx · 信息站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #fbe9d7 0%, #f0d5bc 40%, #e5c3a6 100%);
+            min-height: 100vh;
+            padding: 2.5rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-container {
+            max-width: 1120px;
+            width: 100%;
+        }
+
+        /* 主卡片 —— 暖白柔和底色，轻盈阴影 */
+        .intro-card {
+            background: #fffbf5;
+            border-radius: 48px 24px 48px 24px;
+            box-shadow: 0 12px 40px rgba(120, 70, 30, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+            padding: 2.8rem 2.2rem 2.8rem 2.2rem;
+            transition: box-shadow 0.2s ease;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 1.6rem 0.8rem; }
+            .intro-card { padding: 2rem 1.2rem; border-radius: 32px 18px 32px 18px; }
+        }
+
+        /* 目录感布局 —— 网格卡片 */
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+            margin: 2.5rem 0 1.8rem 0;
+        }
+
+        .k-item {
+            background: #ffffffec;
+            backdrop-filter: blur(2px);
+            border: 1px solid #f2e3d2;
+            border-radius: 28px 14px 28px 14px;
+            padding: 1.8rem 1.4rem;
+            box-shadow: 0 6px 14px #e5cfba30;
+            transition: transform 0.15s ease, box-shadow 0.2s;
+        }
+
+        .k-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 22px #c8ad8e40;
+            border-color: #dbbca0;
+        }
+
+        .k-item h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #7c5d42;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .k-item h3::before {
+            content: "✦";
+            font-size: 1.1rem;
+            color: #bc8f6b;
+            margin-right: 0.2rem;
+        }
+
+        .k-item p, .k-item li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #4d3a2b;
+        }
+
+        .k-item ul {
+            list-style: none;
+            padding-left: 0.4rem;
+        }
+
+        .k-item ul li {
+            padding: 0.25rem 0 0.25rem 1.2rem;
+            position: relative;
+        }
+
+        .k-item ul li::before {
+            content: "·";
+            position: absolute;
+            left: 0.1rem;
+            color: #b88966;
+            font-weight: 700;
+        }
+
+        /* 提示区与相关信息区 */
+        .notice-area {
+            background: #f8ede1;
+            border-radius: 60px 18px 60px 18px;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0 1.2rem 0;
+            border-left: 6px solid #dbb188;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .notice-area p {
+            color: #4f3a28;
+            font-size: 1rem;
+            line-height: 1.6;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .notice-area .label-badge {
+            background: #dbb188;
+            color: #2f2017;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            margin-left: 0.8rem;
+        }
+
+        .related-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 1.8rem;
+            align-items: center;
+            padding: 1.2rem 0 0.2rem 0;
+            border-top: 1px dashed #dcc9b8;
+            margin-top: 0.6rem;
+        }
+
+        .related-links span {
+            color: #6e5540;
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+
+        .related-item {
+            display: inline-block;
+            background: #f3e5d7;
+            padding: 0.35rem 1.2rem;
+            border-radius: 60px;
+            color: #4d3523;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: 1px solid #e2cdb8;
+            transition: 0.15s ease;
+        }
+
+        .related-item:hover {
+            background: #e9d6c2;
+            border-color: #c9ab8f;
+        }
+
+        /* hero 区 */
+        .hero-text {
+            margin-bottom: 1.8rem;
+        }
+
+        .hero-text h1 {
+            font-size: 2.4rem;
+            font-weight: 450;
+            color: #442f1f;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+
+        .hero-text h1 small {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #7b5e45;
+            display: block;
+            margin-top: 0.2rem;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: #4f3825;
+            line-height: 1.7;
+            max-width: 80%;
+            margin: 0.8rem 0 1.2rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .hero-text h1 { font-size: 1.9rem; }
+            .hero-desc { max-width: 100%; font-size: 1rem; }
+            .notice-area { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+            .notice-area .label-badge { margin-left: 0; }
+        }
+
+        /* 内嵌链接样式: 暖色圆角感 */
+        a {
+            color: #835f3e;
+            text-decoration: none;
+            background: #f3e7db;
+            padding: 0.1rem 0.5rem;
+            border-radius: 40px;
+            font-weight: 450;
+            transition: background 0.18s, color 0.15s;
+            border-bottom: 1px solid transparent;
+        }
+
+        a:hover {
+            background: #dbbfaa;
+            color: #2f1e12;
+            border-bottom: 1px solid #b68966;
+        }
+
+        /* 页脚小字 */
+        .footnote {
+            text-align: center;
+            margin-top: 2rem;
+            color: #6d553f;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            opacity: 0.7;
+        }
+
+        .footnote a {
+            background: transparent;
+            padding: 0 0.1rem;
+            border-radius: 0;
+            color: #6d553f;
+            border-bottom: 1px dotted #b68d6b;
+        }
+
+        .footnote a:hover {
+            background: #f0ddcc;
+        }
+
+        .badge-mini {
+            display: inline-block;
+            background: #e4d0ba;
+            border-radius: 30px;
+            padding: 0.15rem 0.8rem;
+            font-size: 0.75rem;
+            color: #3f2c1b;
+            margin-left: 0.3rem;
+        }
+
+        /* 引述类 */
+        .quote-note {
+            background: #fff0e5;
+            border-radius: 24px 12px 24px 12px;
+            padding: 1.4rem 1.6rem;
+            margin: 2rem 0 1rem 0;
+            border: 1px solid #ebd6c0;
+            color: #3b2a1b;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #dcc4ae, transparent);
+            margin: 1.6rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="page-container">
+
+    <div class="intro-card">
+
+        <!-- hero 介绍区 温和说明 -->
+        <div class="hero-text">
+            <h1>
+                关于 · 站点说明
+                <small>信息聚合 · 知识库入口</small>
+            </h1>
+            <div class="hero-desc">
+                这是一个围绕 <a href="https://official-cns-ayx.com">ayx</a> 搭建的轻量信息页，用于整理和呈现与该站点相关的背景、特点与常见查询。内容保持中立、可参考，不构成任何承诺或引导。
+            </div>
+        </div>
+
+        <!-- 目录感布局：四个卡片 -->
+        <div class="knowledge-grid">
+            <div class="k-item">
+                <h3>站点背景</h3>
+                <p>域名 <strong>official-cns-ayx.com</strong> 作为信息入口，提供结构化的功能介绍与使用指引。内容规划以清晰、直接为原则，不包含夸大描述。</p>
+            </div>
+            <div class="k-item">
+                <h3>主要特点</h3>
+                <ul>
+                    <li>界面简洁，分类导航</li>
+                    <li>常见问题集中展示</li>
+                    <li>更新日志可追溯</li>
+                    <li>无强制注册或推送</li>
+                </ul>
+            </div>
+            <div class="k-item">
+                <h3>适用场景</h3>
+                <ul>
+                    <li>初次接触，了解基本功能</li>
+                    <li>查找操作说明与注意事项</li>
+                    <li>回顾版本变动与公告</li>
+                    <li>获取联系渠道</li>
+                </ul>
+            </div>
+            <div class="k-item">
+                <h3>可信参考</h3>
+                <p>所有展示内容均来自公开可查的说明或常规经验整合。建议结合具体页面实际信息交叉确认。本页不收集任何用户数据。</p>
+            </div>
+        </div>
+
+        <!-- 提示区 -->
+        <div class="notice-area">
+            <p>
+                <span style="font-weight: 500;">📌 提示</span> 若你需要直接访问主站，可依据上方链接进入 <a href="https://official-cns-ayx.com" style="background: #e4cfb9; padding: 0.1rem 0.6rem;">ayx</a> 信息页面。所有链接均指向同一来源，无需重复搜索。
+            </p>
+            <span class="label-badge">参考 v1.2</span>
+        </div>
+
+        <!-- 相关信息区：FAQ摘要和更多条目 -->
+        <div class="quote-note">
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; align-items: baseline;">
+                <span style="font-weight: 500; color: #4d3624;">❓ 常见疑问摘要</span>
+                <span class="badge-mini">3 条</span>
+            </div>
+            <ul style="list-style: none; padding: 0.8rem 0 0.2rem 0; columns: 1; column-gap: 2rem;">
+                <li style="padding: 0.3rem 0;">· 该站点需要注册吗？—— 一般浏览无需注册，部分功能可能需登录。</li>
+                <li style="padding: 0.3rem 0;">· 内容更新频率如何？—— 根据站点公告，功能与说明会随版本同步更新。</li>
+                <li style="padding: 0.3rem 0;">· 是否有官方客服？—— 站内提供联系表单或邮箱渠道，具体见“支持”部分。</li>
+            </ul>
+        </div>
+
+        <!-- 相关信息区二：延伸阅读 -->
+        <div class="related-links">
+            <span>📎 相关信息</span>
+            <a href="https://official-cns-ayx.com" class="related-item">ayx</a>
+            <span class="related-item" style="cursor: default; background: #efe4d8;">新手指南</span>
+            <span class="related-item" style="cursor: default; background: #efe4d8;">更新日志</span>
+            <span class="related-item" style="cursor: default; background: #efe4d8;">常见问题</span>
+        </div>
+
+        <hr>
+
+        <!-- 来源与补充说明，自然嵌入核心链接 -->
+        <p style="color: #4b3929; line-height: 1.7; font-size: 0.98rem;">
+            本介绍页仅为信息整理用途，不隶属于官方。所有指向 <a href="https://official-cns-ayx.com">ayx</a> 的链接均直接跳转至对应站点。如果你需要进一步确认细节，建议直接浏览其页面内容。
+        </p>
+        <p style="color: #4b3929; line-height: 1.7; margin-top: 0.4rem; font-size: 0.95rem;">
+            最后更新：2025 · 内容参考自公开资料，请以实际页面为准。
+        </p>
+
+        <!-- 页脚 -->
+        <div class="footnote">
+            <span>知识库风格入口 · 基于公开信息整理</span>
+        </div>
+
+    </div> <!-- /.intro-card -->
+
+</div> <!-- /.page-container -->
+</body>
+</html>
